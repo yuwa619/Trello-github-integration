@@ -1,0 +1,29 @@
+# name of the workflow
+name: Create Trello Card on Action
+
+# Events to be triggered
+on:
+    # Trigger on push, pull request, and create events
+  push:
+   branches:
+     - main
+  pull_request: 
+  create:
+
+# Jobs to be executed
+jobs:
+  create_trello_card:
+    # The type of OS server to run the job on
+    runs-on: ubuntu-latest
+    # Steps to be executed in the job
+    steps:
+      - name: Create Trello Card
+      # the script to create a Trello card using Trello API
+        run: |
+          curl -X POST "https://api.trello.com/1/cards" \
+          -d "name=Code Update Applied${{ github.event.head_commit.message }}" \
+          -d "desc=Code updated by ${{ github.actor }} on repo ${{ github.repository }}" \
+          -d "idList=${{ secrets.TRELLO_LIST_ID }}" \
+          -d "key=${{ secrets.TRELLO_API_KEY }}" \
+          -d "token=${{ secrets.TRELLO_API_TOKEN }}"
+      
