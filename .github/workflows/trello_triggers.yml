@@ -23,6 +23,7 @@ jobs:
           curl -X POST "https://api.trello.com/1/cards" \
           -d "name=Code Update Applied${{ github.event.head_commit.message }}" \
           -d "desc=Code updated by ${{ github.actor }} on repo ${{ github.repository }}" \
+          -d "url=View Commit: ${{ github.event.head_commit.url }}" \
           -d "idList=${{ secrets.TRELLO_LIST_ID }}" \
           -d "key=${{ secrets.TRELLO_API_KEY }}" \
           -d "token=${{ secrets.TRELLO_API_TOKEN }}"
