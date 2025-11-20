@@ -20,11 +20,11 @@ jobs:
       - name: Create Trello Card
       # the script to create a Trello card using Trello API
         run: |
-          curl -X POST "https://api.trello.com/1/cards" \
-          -d "name=Code Update Applied${{ github.event.head_commit.message }}" \
-          -d "desc=Code updated by ${{ github.actor }} on repo ${{ github.repository }}" \
-          -d "url=View Commit: ${{ github.event.head_commit.url }}" \
-          -d "idList=${{ secrets.TRELLO_LIST_ID }}" \
-          -d "key=${{ secrets.TRELLO_API_KEY }}" \
-          -d "token=${{ secrets.TRELLO_API_TOKEN }}"
+            curl -X POST "https://api.trello.com/1/cards" \
+            -d "name=Code Update Applied" \
+            # Add commit message, author, repository, and commit URL to the card description and added %0A%0A for line breaks
+            -d "desc=${{ github.event.head_commit.message }}%0A%0AAuthor: ${{ github.actor }}%0ARepo: ${{ github.repository }}%0AView Commit: ${{ github.event.head_commit.url }}" \
+            -d "idList=${{ secrets.TRELLO_LIST_ID }}" \
+            -d "key=${{ secrets.TRELLO_API_KEY }}" \
+            -d "token=${{ secrets.TRELLO_API_TOKEN }}"
       
